@@ -1,6 +1,18 @@
+<div align="center">
+    <img src="assets/logo.png" alt="ML API with PostgreSQL Integration" width="80%">
+</div>
+
 # ML API with PostgreSQL Integration
 
-This project implements a Machine Learning API using FastAPI and PostgreSQL for data persistence. It provides a robust framework for deploying machine learning models with database integration.
+- ML Engineering best practices with database persistence
+- ML model deployment as a FastAPI service with PostgreSQL integration, containerized with Docker for scalability and reproducibility
+
+---
+
+- You can easily adapt the repository to work with any dataset of your choice.
+- The structure is flexible and can be applied to various machine learning models, including regression, classification, and clustering.
+
+---
 
 ## Features
 
