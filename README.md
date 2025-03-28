@@ -369,13 +369,4 @@ The project is designed to be easily adaptable for different machine learning ta
 
 # 7. For Additional Questions
 
-If you have any questions or encounter issues while working with this project, here are several resources to help you:
-
-- **GitHub Issues**: Open an issue in the GitHub repository
-- **Documentation**: Refer to the documentation in the respective README files within each directory
-- **External Resources**:
-  - [FastAPI Documentation](https://fastapi.tiangolo.com/)
-  - [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
-  - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
-  - [Docker Documentation](https://docs.docker.com/)
-- **Contact**: Feel free to reach out to the maintainers of this project
+If you have any questions or suggestions, feel free to reach out to [Mostafa Rezaee](https://www.linkedin.com/in/mostafa-rezaee/) at Linkedin. You can also open an issue on the project repository.
