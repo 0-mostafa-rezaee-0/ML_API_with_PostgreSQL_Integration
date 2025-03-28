@@ -12,10 +12,10 @@ database/
 ├── models.py            # SQLAlchemy ORM models
 ├── schema.py            # Pydantic schemas
 ├── crud.py              # Database CRUD operations
-├── migrations/          # Alembic migrations
+├── migrations/          # Alembic configuration
 │   ├── env.py           # Migration environment configuration
 │   ├── script.py.mako   # Migration script template
-│   └── versions/        # Migration version scripts
+│   └── versions/        # Migration version directory (currently empty)
 ```
 
 ## Components
@@ -40,13 +40,15 @@ database/
   - Retrieve individual predictions
   - List multiple predictions with pagination
 
-### Database Migrations
+### Database Schema Management
 
-The `migrations/` directory contains [Alembic](https://alembic.sqlalchemy.org/) configuration for database schema migrations:
+The `migrations/` directory contains [Alembic](https://alembic.sqlalchemy.org/) configuration for database schema management:
 
 - **`env.py`**: Configuration for the migration environment
 - **`script.py.mako`**: Template for generating migration scripts
-- **`versions/`**: Directory where migration scripts are stored
+- **`versions/`**: Directory where migration scripts would be stored (currently empty)
+
+While Alembic is configured, this project currently uses a direct table creation approach rather than migration scripts. Tables are created at application startup through SQLAlchemy's `Base.metadata.create_all()` method in `app/main.py` and through the custom setup script in `scripts/db_setup.py`.
 
 ## Database Model
 
@@ -69,9 +71,14 @@ async def predict(data: IrisFeatures, db: Session = Depends(get_db)):
     db_prediction = create_prediction(db, prediction_obj)
 ```
 
-## Migrations
+## Schema Changes
 
-Database migrations are managed with Alembic. The migration workflow is:
+To make database schema changes:
+
+1. Modify the SQLAlchemy models in `models.py`
+2. Restart the application, which will automatically update the schema using `Base.metadata.create_all()`
+
+If you need to switch to a migration-based approach:
 
 1. Make changes to SQLAlchemy models in `models.py`
 2. Generate a migration script:
@@ -83,4 +90,4 @@ Database migrations are managed with Alembic. The migration workflow is:
    alembic upgrade head
    ```
 
-In this project, migrations are typically handled through the Docker entrypoint script, which runs the database setup automatically. 
+The direct table creation approach was chosen for simplicity in a containerized environment where databases are often recreated from scratch. 

@@ -23,7 +23,7 @@ app/
 
 ### Core Files
 
-- **`main.py`**: The main FastAPI application that includes route definitions, middleware configuration, model loading, and API endpoints. It serves as the entry point for the application.
+- **`main.py`**: The main FastAPI application that includes route definitions, middleware configuration, model loading, and API endpoints. It serves as the entry point for the application. It also handles automatic database table creation at startup using SQLAlchemy's `Base.metadata.create_all()`.
 
 - **`config.py`**: Contains application configuration using Pydantic settings management. It handles environment variables, default values, and configuration validation.
 
@@ -38,7 +38,20 @@ The `database/` directory contains all database-related components:
 - **`crud.py`**: Implements Create, Read, Update, Delete operations for database entities
 - **`session.py`**: Manages database session creation and configuration
 - **`deps.py`**: Provides dependency injection utilities for FastAPI
-- **`migrations/`**: Contains Alembic migration scripts and configuration
+- **`migrations/`**: Contains Alembic configuration for database migrations (note: the project currently uses direct table creation rather than migration scripts)
+
+## Database Schema Management
+
+The application uses a direct table creation approach for simplicity:
+
+1. When the application starts, it automatically creates all necessary database tables if they don't exist using:
+   ```python
+   Base.metadata.create_all(bind=engine)
+   ```
+   
+2. Database tables correspond directly to the SQLAlchemy models defined in `database/models.py`.
+
+3. While Alembic is configured for migrations, the project currently doesn't use migration scripts, preferring the direct creation approach for simplicity in a containerized environment.
 
 ## API Endpoints
 

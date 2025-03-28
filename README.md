@@ -10,7 +10,7 @@ This project implements a Machine Learning API using FastAPI and PostgreSQL for 
 - ML model serving capabilities using the Iris dataset
 - Prediction history stored in PostgreSQL database
 - RESTful API endpoints for predictions and retrieving prediction history
-- Database migrations using Alembic
+- Database schema management with SQLAlchemy and Alembic
 
 ## Project Structure
 
@@ -62,6 +62,15 @@ ML_API_with_PostgreSQL_Integration/
 
 The API will be available at `http://localhost:8000`
 
+## Database Setup
+
+This project uses two approaches for database setup:
+
+1. **Direct Table Creation**: Tables are automatically created at application startup using SQLAlchemy's `Base.metadata.create_all()`
+2. **Custom Setup Script**: The `scripts/db_setup.py` script runs during container initialization to set up tables if they don't exist
+
+While Alembic is configured for migrations, the project currently doesn't use migration scripts for schema changes. This approach was chosen for simplicity in a containerized environment where databases are often recreated.
+
 ## API Documentation
 
 Once the application is running, you can access:
@@ -94,9 +103,19 @@ Once the application is running, you can access:
 pytest
 ```
 
-### Database Migrations
+### Database Schema Changes
+
+If you need to make database schema changes:
+
+1. Modify the SQLAlchemy models in `app/database/models.py`
+2. The changes will be automatically applied at application startup
+
+To switch to a migration-based approach:
 ```bash
+# Generate a migration script
 alembic revision --autogenerate -m "description"
+
+# Apply migrations
 alembic upgrade head
 ```
 
