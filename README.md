@@ -297,47 +297,37 @@ docker-compose exec web pytest tests/
 
 ## 4.4. Use Jupyter for Development
 
-Jupyter Notebook provides an interactive environment for data exploration, model development, and visualization. This project includes a containerized Jupyter Notebook server to facilitate development and experimentation.
+You have two options to work with the Jupyter notebooks:
 
-### Accessing Jupyter Notebook
+1. Through Web Browser:
+   
+   ○ Open your browser and navigate to http://localhost:8888
+   ○ All required dependencies are already installed
+   ○ Changes are automatically saved to your local files through Docker volumes
 
-1. After starting the containers with `docker-compose up`, access the Jupyter Notebook interface at:
-   ```
-   http://localhost:8888
-   ```
+2. Through IDE (Recommended):
 
-2. You'll be presented with the Jupyter file explorer. The project directory is mounted in the container, so you have access to all project files.
+   ○ For VS Code:
+   
+      a. Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac)
+      b. Select "Dev Containers: Attach to Running Container..."
+      c. Choose the container named `ml-engineering-api-fastapi-docker-jupyter-1`
+      d. When prompted to open a folder, navigate to `/app`
+      e. You can now work with notebooks directly in VS Code with all dependencies available
+   
+   ○ For Cursor:
+   
+      a. Click the Remote Explorer icon in the sidebar (or press `Ctrl+Shift+P` and search for "Attach to Running Container")
+      b. Select the container named `ml-engineering-api-fastapi-docker-jupyter-1`
+      c. When prompted to open a folder, navigate to `/app`
+      d. You can now work with notebooks directly in Cursor with all dependencies available
 
-### Using the Provided Notebooks
+The provided notebooks are:
 
-The project includes several pre-configured notebooks in the `notebooks/` directory:
+* `notebooks/data_exploration.ipynb` : Explore the Iris dataset
+* `notebooks/train_dev.ipynb` : Develop and train the model
 
-- **data_exploration.ipynb**: Explore and visualize the Iris dataset, including:
-  - Distribution of feature values
-  - Correlation between features
-  - Visualizations of class separability
-
-- **train_dev.ipynb**: Develop and evaluate the machine learning model, including:
-  - Data preprocessing techniques
-  - Model selection and hyperparameter tuning
-  - Performance evaluation on validation data
-
-### Creating New Notebooks
-
-You can create new notebooks for your specific use cases:
-
-1. Click the "New" button in the Jupyter interface and select "Python 3"
-2. Your new notebook will have access to all the project dependencies
-3. To connect to the PostgreSQL database from a notebook, use the same connection string as the main application
-
-### Sharing Code Between Notebooks and the Application
-
-The project structure allows you to:
-- Develop and test code in notebooks
-- Extract and refactor successful code into Python modules
-- Import these modules in both the FastAPI application and other notebooks
-
-This workflow enables rapid prototyping while maintaining code quality and reusability.
+Note: When working through the IDE, you're actually working inside the container where all dependencies are already installed. This ensures consistency between development and production environments.
 
 # 5. Database Setup
 
