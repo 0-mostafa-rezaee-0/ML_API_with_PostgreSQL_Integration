@@ -17,6 +17,21 @@ services:
     networks:
       - ml-api-network
 
+  jupyter:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/ml_api_db
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - ml-api-network
+
   db:
     image: postgres:15
     volumes:
