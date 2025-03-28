@@ -38,13 +38,13 @@
 </details>
 &nbsp;
 
-<details>
-  <summary><a href="#3-project-files-and-folders-overview"><i><b>3. Project Files and Folders Overview</b></i></a></summary>
-</details>
+<div>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-project-files-and-folders-overview"><i><b>3. Project Files and Folders Overview</b></i></a>
+</div>
 &nbsp;
 
 <details>
-  <summary><a href="#4-how-to-use-and-test-the-project"><i><b>4. How to Use and Test the Project</b></i></a></summary>
+  <summary><a href="#4-how-to-use-and-test-the-project"><i><b>4. How to Use and Test the Project</i></b></a></summary>
   <div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-build-and-start-the-containers">4.1. Build and Start the Containers</a><br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-test-the-api-endpoints">4.2. Test the API Endpoints</a><br>
@@ -63,14 +63,14 @@
 </details>
 &nbsp;
 
-<details>
-  <summary><a href="#6-summary"><i><b>6. Summary</b></i></a></summary>
-</details>
+<div>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-summary"><i><b>6. Summary</b></i></a>
+</div>
 &nbsp;
 
-<details>
-  <summary><a href="#7-for-additional-questions"><i><b>7. For Additional Questions</b></i></a></summary>
-</details>
+<div>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-for-additional-questions"><i><b>7. For Additional Questions</b></i></a>
+</div>
 &nbsp;
 
 # 1. About this Repository
@@ -297,16 +297,47 @@ docker-compose exec web pytest tests/
 
 ## 4.4. Use Jupyter for Development
 
-To use Jupyter Notebook for development and experimentation:
+Jupyter Notebook provides an interactive environment for data exploration, model development, and visualization. This project includes a containerized Jupyter Notebook server to facilitate development and experimentation.
 
-1. Access the Jupyter Notebook interface:
+### Accessing Jupyter Notebook
+
+1. After starting the containers with `docker-compose up`, access the Jupyter Notebook interface at:
    ```
    http://localhost:8888
    ```
 
-2. Navigate to the notebooks directory to use the provided notebooks:
-   - `data_exploration.ipynb`: Explore the Iris dataset
-   - `train_dev.ipynb`: Train and evaluate the machine learning model
+2. You'll be presented with the Jupyter file explorer. The project directory is mounted in the container, so you have access to all project files.
+
+### Using the Provided Notebooks
+
+The project includes several pre-configured notebooks in the `notebooks/` directory:
+
+- **data_exploration.ipynb**: Explore and visualize the Iris dataset, including:
+  - Distribution of feature values
+  - Correlation between features
+  - Visualizations of class separability
+
+- **train_dev.ipynb**: Develop and evaluate the machine learning model, including:
+  - Data preprocessing techniques
+  - Model selection and hyperparameter tuning
+  - Performance evaluation on validation data
+
+### Creating New Notebooks
+
+You can create new notebooks for your specific use cases:
+
+1. Click the "New" button in the Jupyter interface and select "Python 3"
+2. Your new notebook will have access to all the project dependencies
+3. To connect to the PostgreSQL database from a notebook, use the same connection string as the main application
+
+### Sharing Code Between Notebooks and the Application
+
+The project structure allows you to:
+- Develop and test code in notebooks
+- Extract and refactor successful code into Python modules
+- Import these modules in both the FastAPI application and other notebooks
+
+This workflow enables rapid prototyping while maintaining code quality and reusability.
 
 # 5. Database Setup
 
@@ -348,7 +379,13 @@ The project is designed to be easily adaptable for different machine learning ta
 
 # 7. For Additional Questions
 
-For any questions or issues related to this project, please:
-1. Open an issue on the GitHub repository
-2. Refer to the documentation in the respective README files within each directory
-3. Check the FastAPI, SQLAlchemy, and PostgreSQL documentation for more advanced features
+If you have any questions or encounter issues while working with this project, here are several resources to help you:
+
+- **GitHub Issues**: Open an issue in the GitHub repository
+- **Documentation**: Refer to the documentation in the respective README files within each directory
+- **External Resources**:
+  - [FastAPI Documentation](https://fastapi.tiangolo.com/)
+  - [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
+  - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+  - [Docker Documentation](https://docs.docker.com/)
+- **Contact**: Feel free to reach out to the maintainers of this project
