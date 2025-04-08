@@ -74,12 +74,17 @@
 &nbsp;
 
 <div>
-  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-summary"><i><b>7. Summary</b></i></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-working-with-postgresql-database"><i><b>7. Working with PostgreSQL Database</b></i></a>
 </div>
 &nbsp;
 
 <div>
-  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#8-for-additional-questions"><i><b>8. For Additional Questions</b></i></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#8-summary"><i><b>8. Summary</b></i></a>
+</div>
+&nbsp;
+
+<div>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#9-for-additional-questions"><i><b>9. For Additional Questions</b></i></a>
 </div>
 &nbsp;
 
@@ -490,13 +495,13 @@ The most effective workflow combines both approaches:
 
 ### 6.3.1. VS Code/Cursor Database Extension Setup
 
-1. Install the "SQLTools" or "Database Client" extension in VS Code/Cursor
+1. Install the `SQLTools` or `Database Client` extension in VS Code/Cursor
 2. Configure a new connection using these settings:
-   - Host: localhost
-   - Port: 5432 (the forwarded port)
-   - Username: user
-   - Password: password
-   - Database: ml_api_db
+   - Host: `localhost`
+   - Port: `5432` (the forwarded port)
+   - Username: `user`
+   - Password: `password`
+   - Database: `ml_api_db`
 
 ### 6.3.2. Python Code Pattern for Notebooks
 
@@ -523,7 +528,72 @@ df.describe()  # Quick statistics
 
 This hybrid approach gives you the best of both worlds - specialized database tools when needed and seamless integration with your data science workflow in notebooks.
 
-# 7. Summary
+# 7. Working with PostgreSQL Database
+
+Unlike SQLite which uses a single file, PostgreSQL is a client-server database system that manages data internally. This section explains how data is stored and accessed in this project.
+
+## 7.1. Database Storage in PostgreSQL
+
+When you collect and store data using this API:
+
+1. **Data Storage**: PostgreSQL stores all data in its internal directory structure, which is mounted as a Docker volume (`postgres_data:/var/lib/postgresql/data/`).
+
+2. **No Single Database File**: You won't see a database file in your project directory. Instead, PostgreSQL manages its data files internally.
+
+3. **Persistence**: The Docker volume ensures data persists even if containers are stopped or rebuilt.
+
+## 7.2. Accessing PostgreSQL Data
+
+There are multiple ways to access the stored data:
+
+1. **Through API Endpoints**: Use the provided API endpoints (`/predictions`) to retrieve data.
+
+2. **Direct Database Access**: Connect to the PostgreSQL instance:
+   ```
+   Host: localhost
+   Port: 5432
+   Username: user
+   Password: password
+   Database: ml_api_db
+   ```
+
+3. **From Jupyter Notebooks**: Use the SQLAlchemy code pattern provided in section 6.3.2.
+
+4. **Using Database GUIs**: Connect with tools like pgAdmin, DBeaver, or database extensions in VS Code/Cursor.
+
+## 7.3. Database Inspection Commands
+
+When the containers are running, you can inspect the database using:
+
+```bash
+# Connect to PostgreSQL container's shell
+docker exec -it ml_api_with_postgresql_integration-db-1 bash
+
+# Connect to PostgreSQL with psql client
+psql -U user -d ml_api_db
+
+# Useful psql commands:
+# \dt - list tables
+# \d+ predictions - show table structure
+# SELECT * FROM predictions LIMIT 5; - view data
+# \q - quit psql
+```
+
+## 7.4. Backing Up and Restoring Data
+
+To back up and restore your PostgreSQL data:
+
+```bash
+# Backup: from host machine
+docker exec -t ml_api_with_postgresql_integration-db-1 pg_dump -U user ml_api_db > backup.sql
+
+# Restore: to host machine
+cat backup.sql | docker exec -i ml_api_with_postgresql_integration-db-1 psql -U user -d ml_api_db
+```
+
+The client-server architecture of PostgreSQL provides benefits including better performance, concurrent access, and more robust data management compared to file-based databases.
+
+# 8. Summary
 
 This project demonstrates how to build a machine learning API with PostgreSQL integration using FastAPI and Docker. It provides a complete framework for:
 
@@ -534,7 +604,7 @@ This project demonstrates how to build a machine learning API with PostgreSQL in
 
 The project is designed to be easily adaptable for different machine learning tasks and datasets while maintaining a strong focus on engineering best practices.
 
-# 8. For Additional Questions
+# 9. For Additional Questions
 
 If you have any questions or encounter issues while working with this project, here are several resources to help you:
 
