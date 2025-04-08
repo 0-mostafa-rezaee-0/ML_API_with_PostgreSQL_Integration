@@ -540,10 +540,10 @@ The most effective workflow combines both approaches:
 
 ### 6.3.1. VS Code/Cursor Database Extension Setup
 
-1. Install the `Database Client` or `SQLTools` + `PostgreSQL Driver` extensions in VS Code/Cursor
+1. Install the `Database Client` or `SQLTools` + `SQLTools PostgreSQL/Cockroach Driver` extensions in VS Code/Cursor
   - `Database Client`: By cweijan
   - `SQLTools`: By Matheus Teixeira
-  - `PostgreSQL Driver`: By mtxr
+  - `SQLTools PostgreSQL/Cockroach Driver`: By mtxr
 
 2. Configure a new connection using these settings:
    - Host: `localhost`
@@ -552,9 +552,9 @@ The most effective workflow combines both approaches:
    - Password: `password`
    - Database: `ml_api_db`
 
-3. `Database Client` vs. `SQLTools` + `PostgreSQL Driver`
+3. `Database Client` vs. `SQLTools` + `SQLTools PostgreSQL/Cockroach Driver`
   - `Database Client`: if you prefer a simple GUI, easy browsing, and minimal setup.
-  - `SQLTools` + `PostgreSQL Driver`: if you want powerful code integration, deep customization, and adapter flexibility.
+  - `SQLTools` + `SQLTools PostgreSQL/Cockroach Driver`: if you want powerful code integration, deep customization, and adapter flexibility.
 
   **Option 1: Database Client**
   - Single installation - All-in-one solution with built-in PostgreSQL support
@@ -563,7 +563,7 @@ The most effective workflow combines both approaches:
   - Simplified connection setup with fewer configuration steps
   - Better table visualization with interactive data grid view
   
-  **Option 2: SQLTools + PostgreSQL Driver**
+  **Option 2: SQLTools + SQLTools PostgreSQL/Cockroach Driver**
   - Two-part installation - Core SQLTools extension plus PostgreSQL/Cockroach Driver
   - **Best for:** Those comfortable with SQL who need advanced features
   - More comprehensive SQL tooling with deeper code integration
