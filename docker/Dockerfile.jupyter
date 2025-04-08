@@ -1,5 +1,10 @@
 FROM python:3.10-slim
 
+# Add labels for better maintainability
+LABEL maintainer="Project Maintainer <maintainer@example.com>"
+LABEL description="Jupyter environment for ML API development"
+LABEL version="1.0"
+
 # Set working directory
 WORKDIR /app
 
@@ -7,6 +12,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
+    netcat-openbsd \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install dependencies
@@ -16,14 +23,26 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Install Jupyter Notebook & JupyterLab
 RUN pip install notebook jupyterlab
 
+# First, copy just the entrypoint script
+COPY ./docker/entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
+
 # Copy the rest of the code
 COPY . .
 
 # Create necessary directories if they don't exist
 RUN mkdir -p /app/models
 
+# Create a non-root user to run the application
+RUN adduser --disabled-password --gecos "" appuser
+RUN chown -R appuser:appuser /app
+USER appuser
+
 # Expose port for Jupyter Notebook
 EXPOSE 8888
+
+# Set the entrypoint
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 # Run Jupyter Notebook
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''"] 

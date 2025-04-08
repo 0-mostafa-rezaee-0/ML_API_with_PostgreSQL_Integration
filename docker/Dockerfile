@@ -12,17 +12,18 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     netcat-openbsd \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entrypoint script
-COPY docker/entrypoint.sh /app/docker-entrypoint.sh
+# First, copy just the entrypoint script
+COPY ./docker/entrypoint.sh /app/docker-entrypoint.sh
 RUN chmod +x /app/docker-entrypoint.sh
 
-# Copy the rest of the application
+# Then copy the rest of the application
 COPY . .
 
 # Create necessary directories if they don't exist
