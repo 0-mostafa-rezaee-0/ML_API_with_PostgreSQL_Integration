@@ -283,9 +283,9 @@ Once the application is running, you can test the endpoints:
    ```
 
 3. Get all predictions:
-   ```bash
+```bash
    curl -X 'GET' 'http://localhost:8000/predictions'
-   ```
+```
 
 ## 4.3. Run the Tests
 
@@ -297,35 +297,104 @@ docker-compose exec web pytest tests/
 
 ## 4.4. Use Jupyter for Development
 
-You have two options to work with the Jupyter notebooks:
+Jupyter Notebook provides an interactive environment for model development, data exploration, and experimentation. You have two options to work with the Jupyter notebooks:
 
-1. Through Web Browser:
+### 4.4.1. Access Options
+
+1. **Through Web Browser**:
    
    ○ Open your browser and navigate to http://localhost:8888
    ○ All required dependencies are already installed
    ○ Changes are automatically saved to your local files through Docker volumes
 
-2. Through IDE (Recommended):
+2. **Through IDE (Recommended)**:
 
    ○ For VS Code:
    
       a. Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac)
       b. Select "Dev Containers: Attach to Running Container..."
-      c. Choose the container named `ml-engineering-api-fastapi-docker-jupyter-1`
+      c. Choose the container named `ml_api_with_postgresql_integration-jupyter-1`
       d. When prompted to open a folder, navigate to `/app`
       e. You can now work with notebooks directly in VS Code with all dependencies available
    
    ○ For Cursor:
    
       a. Click the Remote Explorer icon in the sidebar (or press `Ctrl+Shift+P` and search for "Attach to Running Container")
-      b. Select the container named `ml-engineering-api-fastapi-docker-jupyter-1`
+      b. Select the container named `ml_api_with_postgresql_integration-jupyter-1`
       c. When prompted to open a folder, navigate to `/app`
       d. You can now work with notebooks directly in Cursor with all dependencies available
 
+### 4.4.2. Selecting the Correct Kernel
+
+When opening a notebook, make sure to select the correct kernel:
+
+1. For a new notebook, click on "Select Kernel" in the top right
+2. Choose "Python 3.10.16 (/usr/local/bin/python)" from the dropdown
+3. This kernel has access to all dependencies installed in the container
+
+### 4.4.3. Verifying the Container Environment
+
+If you want to confirm you're working inside the container, run the following code in a notebook cell:
+
+```python
+# Check Python version
+!python --version
+
+# View container environment variables
+import os
+print(os.environ)
+
+# Verify the operating system
+!cat /etc/os-release
+```
+
+The output should show:
+- Python 3.10.x
+- Container-specific environment variables (including DATABASE_URL with 'db' hostname)
+- Debian Linux as the operating system
+
+### 4.4.4. Working with Notebooks
+
 The provided notebooks are:
 
-* `notebooks/data_exploration.ipynb` : Explore the Iris dataset
-* `notebooks/train_dev.ipynb` : Develop and train the model
+* `notebooks/data_exploration.ipynb`: Explore the Iris dataset with visualizations and statistical analysis
+* `notebooks/train_dev.ipynb`: Develop and train the model, experiment with hyperparameters
+
+### 4.4.5. Accessing the Database from Notebooks
+
+To connect to the PostgreSQL database from your notebook:
+
+```python
+from sqlalchemy import create_engine
+import os
+
+# Get database URL from environment variable
+db_url = os.environ.get("DATABASE_URL")
+
+# Create engine
+engine = create_engine(db_url)
+
+# Example query
+import pandas as pd
+df = pd.read_sql("SELECT * FROM predictions", engine)
+df.head()
+```
+
+### 4.4.6. Troubleshooting
+
+1. **Kernel not starting**: 
+   - Verify the container is running with `docker ps`
+   - Check container logs with `docker logs ml_api_with_postgresql_integration-jupyter-1`
+
+2. **Missing dependencies**:
+   - Dependencies are installed from requirements.txt. If you need additional packages:
+     ```python
+     !pip install package_name
+     ```
+
+3. **Database connection issues**:
+   - Ensure the PostgreSQL container is running
+   - Verify the DATABASE_URL environment variable with `os.environ.get("DATABASE_URL")`
 
 Note: When working through the IDE, you're actually working inside the container where all dependencies are already installed. This ensures consistency between development and production environments.
 
