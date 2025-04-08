@@ -16,7 +16,7 @@
 
 ***Table of Contents***
 
-<details open>
+<details>
   <summary><a href="#1-about-this-repository"><i><b>1. About this Repository</b></i></a></summary>
   <div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-who-is-this-project-for">1.1. Who Is This Project For?</a><br>
