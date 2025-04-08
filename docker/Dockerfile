@@ -19,11 +19,11 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# First, copy just the entrypoint script
-COPY ./docker/entrypoint.sh /app/docker-entrypoint.sh
-RUN chmod +x /app/docker-entrypoint.sh
+# Copy the entrypoint script directly to the container root
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Then copy the rest of the application
+# Copy the rest of the application
 COPY . .
 
 # Create necessary directories if they don't exist
@@ -39,7 +39,7 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 # Set the entrypoint
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Command to run the application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"] 
