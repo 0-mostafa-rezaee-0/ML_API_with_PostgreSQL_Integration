@@ -5,8 +5,8 @@
 # Section 1--------------------------------------------------
 # Created by authors 
 
-tree.txt
 0_Instructions/
+tree.txt
 
 # To prevent Zone.Identifier files
 *Zone.Identifier
