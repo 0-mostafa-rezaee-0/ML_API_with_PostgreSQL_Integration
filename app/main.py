@@ -5,6 +5,8 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from app.config import settings
+
+# Import database components
 from app.database import (
     engine, Base, get_db, IrisPrediction, create_prediction,
     get_prediction, get_all_predictions, IrisFeatures, PredictionResponse, PredictionInDB

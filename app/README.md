@@ -1,85 +1,49 @@
-# Application Directory
+# ML API with PostgreSQL Integration
 
-This directory contains the core application code for the ML API with PostgreSQL integration. The application is built using FastAPI and integrates a machine learning model for Iris flower classification with PostgreSQL database for storing predictions.
-
-## Directory Structure
-
-```
-app/
-├── main.py              # Main FastAPI application entry point
-├── config.py            # Application configuration settings
-├── database.py          # Main database connection configuration
-├── database/            # Database components
-│   ├── __init__.py      # Package initialization
-│   ├── crud.py          # Database CRUD operations
-│   ├── deps.py          # Dependency injection for database
-│   ├── models.py        # SQLAlchemy models
-│   ├── schema.py        # Pydantic schemas for request/response
-│   ├── session.py       # Database session management
-│   └── migrations/      # Alembic database migrations
-```
+This directory contains the main API application code organized in a modular structure.
 
 ## Components
 
-### Core Files
+### Main Application Files
 
-- **`main.py`**: The main FastAPI application that includes route definitions, middleware configuration, model loading, and API endpoints. It serves as the entry point for the application. It also handles automatic database table creation at startup using SQLAlchemy's `Base.metadata.create_all()`.
-
-- **`config.py`**: Contains application configuration using Pydantic settings management. It handles environment variables, default values, and configuration validation.
-
-- **`database.py`**: Configures the main database connection and provides essential database utilities.
+- `main.py`: FastAPI application entry point with route definitions
+- `config.py`: Configuration settings using Pydantic
+- `database.py`: Re-exports database components (legacy file, use database/ package directly)
 
 ### Database Package
 
-The `database/` directory contains all database-related components:
+The `database/` directory contains a complete implementation of database integration:
 
-- **`models.py`**: Defines SQLAlchemy ORM models that represent database tables
-- **`schema.py`**: Defines Pydantic models for request/response validation and serialization
-- **`crud.py`**: Implements Create, Read, Update, Delete operations for database entities
-- **`session.py`**: Manages database session creation and configuration
-- **`deps.py`**: Provides dependency injection utilities for FastAPI
-- **`migrations/`**: Contains Alembic configuration for database migrations (note: the project currently uses direct table creation rather than migration scripts)
+- SQLAlchemy ORM models for storing predictions
+- Pydantic models for request/response validation
+- CRUD operations for database access
+- Session management and dependency injection
 
-## Database Schema Management
-
-The application uses a direct table creation approach for simplicity:
-
-1. When the application starts, it automatically creates all necessary database tables if they don't exist using:
-   ```python
-   Base.metadata.create_all(bind=engine)
-   ```
-   
-2. Database tables correspond directly to the SQLAlchemy models defined in `database/models.py`.
-
-3. While Alembic is configured for migrations, the project currently doesn't use migration scripts, preferring the direct creation approach for simplicity in a containerized environment.
+See the [database README](./database/README.md) for detailed information.
 
 ## API Endpoints
 
-The application exposes the following endpoints:
+The application provides the following endpoints:
 
-- `GET /`: Root endpoint with welcome message
-- `GET /health`: Health check endpoint
-- `POST /predict`: Endpoint to make Iris flower predictions and store in database
-- `GET /predictions`: Retrieve all stored predictions with pagination
-- `GET /predictions/{prediction_id}`: Retrieve a specific prediction by ID
+- `GET /`: Root endpoint returning a welcome message
+- `GET /health`: Health check endpoint for monitoring
+- `POST /predict`: Make Iris flower predictions and store in database
+- `GET /predictions`: Retrieve all predictions with pagination
+- `GET /predictions/{prediction_id}`: Retrieve a specific prediction
 
-## ML Model Integration
+## Configuration
 
-The application loads a pre-trained Scikit-learn model for Iris classification from the `models/` directory at startup. Predictions are made using this model and then stored in the PostgreSQL database.
+Application configuration is defined in `config.py` and can be overridden using environment variables or a `.env` file. Important settings include:
+
+- `DATABASE_URL`: PostgreSQL connection string
+- `MODEL_PATH`: Path to the trained ML model
+- `SECRET_KEY`: Secret key for security features
 
 ## Database Integration
 
-The PostgreSQL database is used to:
-1. Store prediction inputs and results
-2. Retrieve prediction history
-3. Allow for tracking and analysis of prediction patterns
+The application uses SQLAlchemy ORM for database integration:
 
-## Usage
-
-This application is designed to be run using Docker Compose, which will set up both the FastAPI application and the PostgreSQL database:
-
-```bash
-docker-compose up
-```
-
-Once running, the API is accessible at http://localhost:8000 with API documentation at http://localhost:8000/docs. 
+1. Models are defined in `database/models.py`
+2. Database tables are created automatically at startup
+3. Predictions are stored in the database when the `/predict` endpoint is called
+4. Stored predictions can be retrieved via the `/predictions` endpoints 

@@ -1,11 +1,13 @@
-from sqlalchemy import Column, Integer, Float, DateTime, String
+from sqlalchemy import Column, Integer, Float, String, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import func
 from datetime import datetime
 
 Base = declarative_base()
 
 class IrisPrediction(Base):
-    __tablename__ = "iris_predictions"
+    """SQLAlchemy model for storing Iris predictions"""
+    __tablename__ = "predictions"
 
     id = Column(Integer, primary_key=True, index=True)
     sepal_length = Column(Float, nullable=False)
@@ -14,14 +16,14 @@ class IrisPrediction(Base):
     petal_width = Column(Float, nullable=False)
     prediction = Column(Integer, nullable=False)
     prediction_label = Column(String, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime(timezone=True), default=func.now())
 
     @classmethod
     def from_request(cls, features, prediction):
-        """Create a prediction record from request data and model prediction"""
-        # Map prediction integer to species label
-        species_map = {0: "setosa", 1: "versicolor", 2: "virginica"}
-        prediction_label = species_map.get(prediction, "unknown")
+        """Create a prediction object from request features and model prediction"""
+        # Map prediction integer to label
+        labels = {0: "setosa", 1: "versicolor", 2: "virginica"}
+        prediction_label = labels.get(prediction, "unknown")
         
         return cls(
             sepal_length=features[0],

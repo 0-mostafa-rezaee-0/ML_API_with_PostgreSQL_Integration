@@ -1,6 +1,67 @@
-# Database Package
+# Database Module
 
-This directory contains the database components for the ML API with PostgreSQL integration. It implements a clean, modular architecture for database operations using SQLAlchemy ORM and Pydantic.
+This module contains all the database-related components for the ML API with PostgreSQL Integration.
+
+## Structure
+
+- `__init__.py`: Exports components for easy importing
+- `models.py`: SQLAlchemy ORM models
+- `schema.py`: Pydantic models for request/response validation
+- `crud.py`: Database operations (Create, Read, Update, Delete)
+- `session.py`: Database connection and session management
+- `deps.py`: FastAPI dependency injection
+
+## Components
+
+### Models
+
+The primary model is `IrisPrediction`, which stores:
+
+- Iris flower measurements (sepal_length, sepal_width, petal_length, petal_width)
+- Prediction results (prediction integer and prediction_label string)
+- Metadata (id, created_at)
+
+### Schemas
+
+Pydantic models for type validation:
+
+- `IrisFeatures`: Input model for prediction requests
+- `PredictionBase`: Base model with common attributes
+- `PredictionCreate`: Model for creating predictions
+- `PredictionInDB`: Model for predictions as stored in database
+- `PredictionResponse`: Response model for prediction endpoint
+
+### Database Operations
+
+- `create_prediction()`: Save a prediction to the database
+- `get_prediction()`: Retrieve a specific prediction by ID
+- `get_all_predictions()`: Get all predictions with pagination
+- `delete_prediction()`: Delete a prediction by ID
+
+## Usage
+
+Import components from the module:
+
+```python
+from app.database import (
+    engine, Base, get_db, IrisPrediction, create_prediction,
+    get_prediction, get_all_predictions
+)
+```
+
+Create database tables:
+
+```python
+Base.metadata.create_all(bind=engine)
+```
+
+Use the dependency injection in FastAPI:
+
+```python
+@app.get("/predictions")
+async def get_predictions(db: Session = Depends(get_db)):
+    return get_all_predictions(db)
+```
 
 ## Directory Structure
 

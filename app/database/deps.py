@@ -1,10 +1,13 @@
 from typing import Generator
-from .session import SessionLocal
+from sqlalchemy.orm import Session
+from app.database.session import SessionLocal
 
-def get_db() -> Generator:
+def get_db() -> Generator[Session, None, None]:
     """
-    Dependency function that yields database sessions.
-    To be used in FastAPI dependency injection system.
+    Dependency for FastAPI to get a database session.
+    
+    Creates a new database session for each request, closes it when the request is done.
+    This ensures each request has its own session and is properly cleaned up.
     """
     db = SessionLocal()
     try:
