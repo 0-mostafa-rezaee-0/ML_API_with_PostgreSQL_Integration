@@ -92,6 +92,33 @@
 
 This project demonstrates an end-to-end ML engineering workflow with database integration. You can train a machine learning model, serve it using a FastAPI application, store predictions in a PostgreSQL database, and experiment interactively with Jupyter Notebook – all within Docker containers. The project is designed to be reproducible and maintainable.
 
+The project provides a comprehensive learning resource with:
+
+- **Core Application Components**:
+  - A well-structured FastAPI application with proper routing and middleware
+  - Complete PostgreSQL integration using SQLAlchemy ORM
+  - Properly organized database package with models, schemas, and CRUD operations
+  - Dependency injection for clean, testable code
+
+- **Docker Infrastructure**:
+  - Containerized services for API, database, and Jupyter notebook
+  - Volume mounting for data persistence and code accessibility
+  - Environment variable configuration for flexible deployment
+  - Health checks and container orchestration
+
+- **Development Environment**:
+  - Jupyter notebooks for data exploration and model development
+  - Scripts for database setup and model training
+  - Complete test suite for API endpoints and database operations
+
+- **Documentation**:
+  - Extensive README files in each directory
+  - Detailed explanations of architectural decisions
+  - Complete setup and usage instructions
+  - Best practices for database integration
+
+This project follows clean architecture principles with a clear separation of concerns, making it an excellent reference for building production-ready machine learning APIs with database integration.
+
 ## 1.1. Who Is This Project For?
 
 This project is designed for anyone interested in machine learning, API development, database integration, or containerization with Docker. Whether you're a student, developer, or data scientist, this resource will guide you through building and deploying a machine learning API with database persistence using FastAPI, PostgreSQL, and Docker.
@@ -511,9 +538,9 @@ The most effective workflow combines both approaches:
   | Aspect              | SQLTools                                                                                                                                                            | Database Client                                                                                                                                            |
   |-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   | Setup & Configuration | ✅ Large community & docs  <br> ✅ Multiple adapters (MySQL, Postgres, etc.) <br> ❌ More config-heavy (JSON files) <br> ❌ Manual adapter installs needed | ✅ Minimal config required <br> ✅ Quick setup out of the box <br> ❌ Limited advanced settings <br> ❌ Not as flexible with niche databases |
-  | UI & Navigation     | ✅ Familiar code-based workflow <br> ✅ Lightweight, integrates well into editor <br> ❌ Less visual exploration <br> ❌ Feels “techy” to newcomers | ✅ GUI-based table browsing & editing <br> ✅ Easy schema view in the sidebar <br> ❌ Can feel heavier/cluttered if you prefer code <br> ❌ Fewer inline code features |
+  | UI & Navigation     | ✅ Familiar code-based workflow <br> ✅ Lightweight, integrates well into editor <br> ❌ Less visual exploration <br> ❌ Feels "techy" to newcomers | ✅ GUI-based table browsing & editing <br> ✅ Easy schema view in the sidebar <br> ❌ Can feel heavier/cluttered if you prefer code <br> ❌ Fewer inline code features |
   | Auto-Completion     | ✅ Robust intellisense & linting <br> ✅ Good for large/complex schemas <br> ❌ Requires fine-tuning for some DB engines | ✅ Basic suggestions for major SQL dialects <br> ✅ Enough for quick queries <br> ❌ Not as powerful or customizable as SQLTools <br> ❌ Lacks deeper query analysis |
-  | Customization       | ✅ Highly extensible (plugins, adapters) <br> ✅ Fine-grained JSON config <br> ❌ Can be daunting for beginners <br> ❌ Takes time to master | ✅ Straightforward “turnkey” experience <br> ✅ Simple configuration menus <br> ❌ Smaller ecosystem <br> ❌ Fewer ways to adapt to unusual or advanced requirements |
+  | Customization       | ✅ Highly extensible (plugins, adapters) <br> ✅ Fine-grained JSON config <br> ❌ Can be daunting for beginners <br> ❌ Takes time to master | ✅ Straightforward "turnkey" experience <br> ✅ Simple configuration menus <br> ❌ Smaller ecosystem <br> ❌ Fewer ways to adapt to unusual or advanced requirements |
   | Community & Support | ✅ Very large user base, lots of tutorials <br> ✅ Frequent updates & GitHub activity <br> ❌ Some help documents can be spread out <br> ❌ Might lag behind if a DB is extremely new | ✅ Growing but smaller community <br> ✅ Clear official docs <br> ❌ Not as many community-driven resources <br> ❌ Might not have direct support for very new or specialized databases |
 
 ### 6.3.2. Python Code Pattern for Notebooks
