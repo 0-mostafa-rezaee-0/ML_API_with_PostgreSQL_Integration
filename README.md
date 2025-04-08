@@ -540,16 +540,32 @@ The most effective workflow combines both approaches:
 
 ### 6.3.1. VS Code/Cursor Database Extension Setup
 
-1. Install the `SQLTools` or `Database Client` extension in VS Code/Cursor
+1. Install the `Database Client` or `SQLTools` + `PostgreSQL Driver` extensions in VS Code/Cursor
 2. Configure a new connection using these settings:
    - Host: `localhost`
    - Port: `5432` (the forwarded port)
    - Username: `user`
    - Password: `password`
    - Database: `ml_api_db`
-3. SQLTools vs Database Client
-  - Choose SQLTools if you want powerful code integration, deep customization, and adapter flexibility.
-  - Choose Database Client if you prefer a simple GUI, easy browsing, and minimal setup.
+3. `Database Client` vs. `SQLTools` + `PostgreSQL Driver`
+  - `Database Client`: if you prefer a simple GUI, easy browsing, and minimal setup.
+  - `SQLTools` + `PostgreSQL Driver`: if you want powerful code integration, deep customization, and adapter flexibility.
+
+  **Option 1: Database Client**
+  - Single installation - All-in-one solution with built-in PostgreSQL support
+  - **Best for:** Visual learners, beginners, and those who prioritize ease of use
+  - Modern interface with intuitive data exploration features
+  - Simplified connection setup with fewer configuration steps
+  - Better table visualization with interactive data grid view
+  
+  **Option 2: SQLTools + PostgreSQL Driver**
+  - Two-part installation - Core SQLTools extension plus PostgreSQL/Cockroach Driver
+  - **Best for:** Those comfortable with SQL who need advanced features
+  - More comprehensive SQL tooling with deeper code integration
+  - Robust intellisense & linting capabilities
+  - Highly extensible with plugins and fine-grained configuration
+  
+  Both options will connect to the project's PostgreSQL database using the same connection parameters. Consider your learning style and preferences when choosing - visual, GUI-focused learners may prefer Database Client, while code-centric, customization-focused learners might prefer SQLTools.
 
   **Feature Comparison:**
 
