@@ -152,41 +152,59 @@ Folder PATH listing
 |   |   config.py                 <-- Application configuration
 |   |   database.py               <-- Database connection configuration
 |   |   main.py                   <-- Main FastAPI application
+|   |   README.md                 <-- API Application documentation
 |   |
 |   \---database                  <-- Database components
 |       |   crud.py               <-- Database CRUD operations
 |       |   deps.py               <-- Dependency injection
 |       |   models.py             <-- SQLAlchemy models
+|       |   README.md             <-- Database module documentation
 |       |   schema.py             <-- Pydantic schemas
 |       |   session.py            <-- Database session management
+|       |   __init__.py           <-- Package initialization and exports
 |       |
 |       \---migrations            <-- Alembic migrations
+|           |   env.py            <-- Alembic environment configuration
+|           |   README.md         <-- Migrations documentation
+|           |   script.py.mako    <-- Migration script template
+|           |
+|           \---versions          <-- Migration version scripts
+|                   README.md     <-- Versions directory documentation
 |
 +---assets                        <-- Contains static assets (images, styles, etc.)
 |       logo.png                  <-- Project logo image
+|       README.md                 <-- Assets directory documentation
 |
 +---data                          <-- Directory for storing datasets
 |       original_dataset.csv      <-- Example dataset for model training
+|       README.md                 <-- Data directory documentation
 |
 +---docker                        <-- Contains Docker configuration files
 |       Dockerfile                <-- Dockerfile for building the API service
 |       Dockerfile.jupyter        <-- Dockerfile for setting up Jupyter Notebook
+|       entrypoint.sh             <-- Container startup script
+|       README.md                 <-- Docker setup documentation
 |
 +---models                        <-- Stores trained machine learning models
 |       ml_model.pkl              <-- Serialized ML model
+|       README.md                 <-- Models directory documentation
 |
 +---notebooks                     <-- Jupyter notebooks for experiments and analysis
 |       data_exploration.ipynb    <-- Notebook for data exploration
 |       train_dev.ipynb           <-- Notebook for training and development
+|       README.md                 <-- Notebooks directory documentation
 |
 +---scripts                       <-- Contains utility scripts
 |       db_setup.py               <-- Script for setting up the database
 |       train.py                  <-- Script for training models
+|       README.md                 <-- Scripts directory documentation
 |
 +---tests                         <-- Contains automated tests
 |       __init__.py               <-- Initializes the tests package
 |       test_api.py               <-- API endpoint tests
+|       README.md                 <-- Tests directory documentation
 |
+|   .dockerignore                 <-- Specifies files to exclude from Docker builds
 |   .gitignore                    <-- Specifies files to ignore in Git version control
 |   alembic.ini                   <-- Alembic configuration
 |   docker-compose.yml            <-- Docker Compose configuration
