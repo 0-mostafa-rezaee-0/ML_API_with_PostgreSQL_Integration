@@ -63,13 +63,23 @@
 </details>
 &nbsp;
 
+<details>
+  <summary><a href="#6-database-development-best-practices"><i><b>6. Database Development Best Practices</b></i></a></summary>
+  <div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#61-database-interaction-approaches">6.1. Database Interaction Approaches</a><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#62-recommended-hybrid-approach">6.2. Recommended Hybrid Approach</a><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#63-setting-up-database-tools">6.3. Setting Up Database Tools</a><br>
+  </div>
+</details>
+&nbsp;
+
 <div>
-  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#6-summary"><i><b>6. Summary</b></i></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-summary"><i><b>7. Summary</b></i></a>
 </div>
 &nbsp;
 
 <div>
-  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#7-for-additional-questions"><i><b>7. For Additional Questions</b></i></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#8-for-additional-questions"><i><b>8. For Additional Questions</b></i></a>
 </div>
 &nbsp;
 
@@ -301,13 +311,7 @@ Jupyter Notebook provides an interactive environment for model development, data
 
 ### 4.4.1. Access Options
 
-1. **Through Web Browser**:
-   
-   ○ Open your browser and navigate to http://localhost:8888
-   ○ All required dependencies are already installed
-   ○ Changes are automatically saved to your local files through Docker volumes
-
-2. **Through IDE (Recommended)**:
+1. **Through IDE (Recommended)**:
 
    ○ For VS Code:
    
@@ -323,6 +327,12 @@ Jupyter Notebook provides an interactive environment for model development, data
       b. Select the container named `ml_api_with_postgresql_integration-jupyter-1`
       c. When prompted to open a folder, navigate to `/app`
       d. You can now work with notebooks directly in Cursor with all dependencies available
+
+2. **Through Web Browser**:
+   
+   ○ Open your browser and navigate to http://localhost:8888
+   ○ All required dependencies are already installed
+   ○ Changes are automatically saved to your local files through Docker volumes
 
 ### 4.4.2. Selecting the Correct Kernel
 
@@ -425,7 +435,95 @@ While the project is configured with Alembic for migrations, it currently doesn'
    alembic upgrade head
    ```
 
-# 6. Summary
+# 6. Database Development Best Practices
+
+When working with databases in a containerized environment, you have multiple approaches for database interaction. This section covers best practices for database development within Docker.
+
+## 6.1. Database Interaction Approaches
+
+### 6.1.1. Using Jupyter Notebooks
+
+**Advantages:**
+- **All-in-one environment**: Code execution, data visualization, and database interaction in one place
+- **Documentation as you go**: Notebooks serve as self-documenting SQL exploratory sessions
+- **Visualization integration**: Easily plot query results using pandas and matplotlib
+- **Reproducibility**: Queries and their results are saved together in the notebook
+
+**Best for:**
+- Data exploration and analysis
+- Creating data processing pipelines
+- Prototyping database operations
+- Learning and experimentation
+
+### 6.1.2. Using VS Code/Cursor Database Extensions
+
+**Advantages:**
+- **Purpose-built tools**: Specialized features like schema visualization and query optimization
+- **SQL-focused interface**: Better syntax highlighting and autocompletion
+- **Database administration**: Easier to perform administrative tasks
+- **Separate concerns**: Keeps database work distinct from application code
+
+**Best for:**
+- Schema design and management
+- Complex query development and testing
+- Database administration tasks
+- Day-to-day database operations
+
+## 6.2. Recommended Hybrid Approach
+
+The most effective workflow combines both approaches:
+
+1. **Use VS Code/Cursor Database Extensions for:**
+   - Initial database setup and schema management
+   - Complex SQL query development
+   - Production database migrations
+   - Database administration tasks
+
+2. **Use Jupyter Notebooks for:**
+   - Data exploration and analysis
+   - Combining SQL queries with data processing
+   - Documenting database workflows with explanations
+   - Visualizing query results
+   - Prototyping database interactions for your ML pipeline
+
+## 6.3. Setting Up Database Tools
+
+### 6.3.1. VS Code/Cursor Database Extension Setup
+
+1. Install the "SQLTools" or "Database Client" extension in VS Code/Cursor
+2. Configure a new connection using these settings:
+   - Host: localhost
+   - Port: 5432 (the forwarded port)
+   - Username: user
+   - Password: password
+   - Database: ml_api_db
+
+### 6.3.2. Python Code Pattern for Notebooks
+
+```python
+from sqlalchemy import create_engine, text
+import pandas as pd
+import os
+
+# Get database URL from environment variable
+db_url = os.environ.get("DATABASE_URL")
+engine = create_engine(db_url)
+
+# For exploratory queries
+def run_query(query):
+    """Run a SQL query and return results as a DataFrame"""
+    with engine.connect() as conn:
+        result = conn.execute(text(query))
+        return pd.DataFrame(result.fetchall(), columns=result.keys())
+
+# Example usage
+df = run_query("SELECT * FROM predictions LIMIT 10")
+df.describe()  # Quick statistics
+```
+
+This hybrid approach gives you the best of both worlds - specialized database tools when needed and seamless integration with your data science workflow in notebooks.
+
+# 7. Summary
 
 This project demonstrates how to build a machine learning API with PostgreSQL integration using FastAPI and Docker. It provides a complete framework for:
 
@@ -436,6 +534,15 @@ This project demonstrates how to build a machine learning API with PostgreSQL in
 
 The project is designed to be easily adaptable for different machine learning tasks and datasets while maintaining a strong focus on engineering best practices.
 
-# 7. For Additional Questions
+# 8. For Additional Questions
 
-If you have any questions or suggestions, feel free to reach out to [Mostafa Rezaee](https://www.linkedin.com/in/mostafa-rezaee/) at Linkedin. You can also open an issue on the project repository.
+If you have any questions or encounter issues while working with this project, here are several resources to help you:
+
+- **GitHub Issues**: Open an issue in the GitHub repository
+- **Documentation**: Refer to the documentation in the respective README files within each directory
+- **External Resources**:
+  - [FastAPI Documentation](https://fastapi.tiangolo.com/)
+  - [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
+  - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+  - [Docker Documentation](https://docs.docker.com/)
+- **Contact**: Feel free to reach out to the maintainers of this project
