@@ -541,12 +541,17 @@ The most effective workflow combines both approaches:
 ### 6.3.1. VS Code/Cursor Database Extension Setup
 
 1. Install the `Database Client` or `SQLTools` + `PostgreSQL Driver` extensions in VS Code/Cursor
+  - `Database Client`: By cweijan
+  - `SQLTools`: By Matheus Teixeira
+  - `PostgreSQL Driver`: By mtxr
+
 2. Configure a new connection using these settings:
    - Host: `localhost`
    - Port: `5432` (the forwarded port)
    - Username: `user`
    - Password: `password`
    - Database: `ml_api_db`
+
 3. `Database Client` vs. `SQLTools` + `PostgreSQL Driver`
   - `Database Client`: if you prefer a simple GUI, easy browsing, and minimal setup.
   - `SQLTools` + `PostgreSQL Driver`: if you want powerful code integration, deep customization, and adapter flexibility.
@@ -576,6 +581,11 @@ The most effective workflow combines both approaches:
   | Auto-Completion     | ✅ Robust intellisense & linting <br> ✅ Good for large/complex schemas <br> ❌ Requires fine-tuning for some DB engines | ✅ Basic suggestions for major SQL dialects <br> ✅ Enough for quick queries <br> ❌ Not as powerful or customizable as SQLTools <br> ❌ Lacks deeper query analysis |
   | Customization       | ✅ Highly extensible (plugins, adapters) <br> ✅ Fine-grained JSON config <br> ❌ Can be daunting for beginners <br> ❌ Takes time to master | ✅ Straightforward "turnkey" experience <br> ✅ Simple configuration menus <br> ❌ Smaller ecosystem <br> ❌ Fewer ways to adapt to unusual or advanced requirements |
   | Community & Support | ✅ Very large user base, lots of tutorials <br> ✅ Frequent updates & GitHub activity <br> ❌ Some help documents can be spread out <br> ❌ Might lag behind if a DB is extremely new | ✅ Growing but smaller community <br> ✅ Clear official docs <br> ❌ Not as many community-driven resources <br> ❌ Might not have direct support for very new or specialized databases |
+
+**Symbols Used**
+- ✅ = Primary strength / core functionality
+- ➕ = Secondary benefit / additional pro
+- ❌ = Limitation / drawback
 
 ### 6.3.2. Python Code Pattern for Notebooks
 
