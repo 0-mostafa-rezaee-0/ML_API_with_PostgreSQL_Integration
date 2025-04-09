@@ -584,7 +584,6 @@ The most effective workflow combines both approaches:
 
 **Symbols Used**
 - ✅ = Primary strength / core functionality
-- ➕ = Secondary benefit / additional pro
 - ❌ = Limitation / drawback
 
 ### 6.3.2. Python Code Pattern for Notebooks
